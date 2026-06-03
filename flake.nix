@@ -20,7 +20,7 @@
           gradle
           java-language-server
 				];
-			shellHook = "tmux -L Roulette new-session -A -s Gilded-Rose";
+			shellHook = "tmux -L Roulette new-session -A -s Roulette";
 			};
 		};
 	}
