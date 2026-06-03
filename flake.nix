@@ -17,7 +17,6 @@
 			name="Roulette";
 			packages = with pkgs; [
           jdk17
-          gradle
           java-language-server
 				];
 			shellHook = "tmux -L Roulette new-session -A -s Roulette";
