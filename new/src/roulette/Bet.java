@@ -1,65 +1,50 @@
 package roulette;
+import util.ConsoleReader;
 
 /**
  * Represents player's attempt to bet on outcome of the roulette wheel's spin.
  * 
  * @author Robert C. Duvall
  */
-public class Bet
-{
 
-    public enum BetOption {
-        ODD, EVEN, RED, BLACK, NUMBER_RANGE
-    };	
-
-    private BetOption option;
-    private int number;
-    
-    public Bet(BetOption option) {
-    	this.option = option;
-    }
-    
-    public Bet(int number) {
-    	this.option = BetOption.NUMBER_RANGE;
-    	this.number = number;
-    }
-
-    public BetOption option() {
-    	return this.option;
-    }
-    
-    public int number() {
-    	return this.number;
-    }
-    
-    public int getPayoff(int amountBet, Wheel wheelState)
-    {
-        int amount = amountBet;
-        if (wheelState.matchesBet(this))
-        {
-            System.out.println("*** Congratulations :) You win ***");
-            amount *= getOdds();
+public abstract class Bet {
+  public static Bet fromInput() {
+    while (true) {
+      String bet = ConsoleReader.promptString("What would you like to bet on? ");
+      try {
+        int numBet = Integer.parseInt(bet);
+        if (numBet >= 1 && numBet < 34) {
+          return new NumberRangeBet(numBet);
         }
-        else
-        {
-            System.out.println("*** Sorry :( You lose ***");
-            amount *= -1;
+      } catch (NumberFormatException e) {
+        try {
+          switch (bet.toLowerCase()) {
+            case "red": return new RedBet();
+            case "black": return new BlackBet();
+            case "odd": return new OddBet();
+            case "even": return new EvenBet();
+            default: break;
+          }
+        } catch (IllegalArgumentException ex) {
+          // fall through
         }
-        return amount;
+      }
+      System.out.println("Invalid bet!  Try again.");
     }
-    
-    public int getOdds() {
-    	switch(option()) {
-    	case RED:
-		case BLACK:
-		case ODD:
-		case EVEN:
-			return 1;
-		case NUMBER_RANGE:
-			 return 11;
-		default:
-			throw new Error("Invaid bet type");
-    	}
+  }
+
+  public int getPayoff(int amountBet, Wheel wheelState) {
+    int amount = amountBet;
+    if (matches(wheelState)) {
+      System.out.println("*** Congratulations :) You win ***");
+      amount *= getOdds();
+    } else {
+      System.out.println("*** Sorry :( You lose ***");
+      amount *= -1;
     }
-    
+    return amount;
+  }
+
+  public abstract boolean matches(Wheel wheel);
+  public abstract int getOdds();
 }

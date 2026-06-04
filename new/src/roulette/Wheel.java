@@ -11,123 +11,74 @@ import java.util.Random;
  * 
  * @author Robert C. Duvall
  */
-public class Wheel
-{
-    // constants
-    public static final String RED = "red";
-    public static final String BLACK = "black";
-    public static final String GREEN = "green";
+public class Wheel {
 
-    // wheel values --- not quite every other one :(
-    private static final String[] OUR_SPOTS = 
-        {
-            GREEN,
-            RED,
-            BLACK,
-            RED,
-            BLACK,
-            RED,
-            BLACK,
-            RED,
-            BLACK,
-            RED,
-            BLACK,
-            BLACK,
-            RED,
-            BLACK,
-            RED,
-            BLACK,
-            RED,
-            BLACK,
-            RED,
-            RED,
-            BLACK,
-            RED,
-            BLACK,
-            RED,
-            BLACK,
-            RED,
-            BLACK,
-            RED,
-            BLACK,
-            BLACK,
-            RED,
-            BLACK,
-            RED,
-            BLACK,
-            RED,
-            BLACK,
-            RED,
-            GREEN
-        };
+  static final int RANGE_SIZE = 3;
 
-    private int myNumSpins;
-    private int myValue;
-    private Random myRoller;
+  private static final Color[] OUR_SPOTS = {
+    Color.GREEN,
+    Color.RED,
+    Color.BLACK,
+    Color.RED,
+    Color.BLACK,
+    Color.RED,
+    Color.BLACK,
+    Color.RED,
+    Color.BLACK,
+    Color.RED,
+    Color.BLACK,
+    Color.BLACK,
+    Color.RED,
+    Color.BLACK,
+    Color.RED,
+    Color.BLACK,
+    Color.RED,
+    Color.BLACK,
+    Color.RED,
+    Color.RED,
+    Color.BLACK,
+    Color.RED,
+    Color.BLACK,
+    Color.RED,
+    Color.BLACK,
+    Color.RED,
+    Color.BLACK,
+    Color.RED,
+    Color.BLACK,
+    Color.BLACK,
+    Color.RED,
+    Color.BLACK,
+    Color.RED,
+    Color.BLACK,
+    Color.RED,
+    Color.BLACK,
+    Color.RED,
+    Color.GREEN
+  };
 
+  private int myNumSpins;
+  private int myValue;
+  private Random myRoller;
 
-    /**
-     * Construct the wheel.
-     */
-    public Wheel ()
-    {
-        myNumSpins = 0;
-        myValue = 0;
-        myRoller = new Random();
-        myRoller.setSeed(2907);
-    }
+  public Wheel(){
+    myNumSpins = 0;
+    myValue = 0;
+    myRoller = new Random();
+    myRoller.setSeed(2907);
+  }
 
 
-    /**
-     * @return color of the current spot on the wheel
-     */
-    public String getColor ()
-    {
-        return OUR_SPOTS[myValue];
-    }
+  public Color getColor(){
+    return OUR_SPOTS[myValue];
+  }
 
 
-    /**
-     * @return number of the current spot on the wheel
-     */
-    public int getNumber ()
-    {
-        return myValue;
-    }
+  public int getNumber(){
+    return myValue;
+  }
 
-
-    /**
-     * @return number of times the wheel has been spun
-     */
-    public int getNumSpins ()
-    {
-        return myNumSpins;
-    }
-
-
-    /**
-     * Spins the wheel, choosing a new spot.
-     */
-    public void spin ()
-    {
-        myNumSpins++;
-        myValue = myRoller.nextInt(OUR_SPOTS.length);
-    }
-    
-    public boolean matchesBet(Bet bet) {
-    	switch(bet.option()) {
-		case BLACK:
-			return getColor().equals("black");
-		case EVEN:
-			return getNumber() % 2 == 0;
-		case NUMBER_RANGE:
-			 return (bet.number() <= getNumber() && getNumber() < bet.number() + 3);
-		case ODD:
-			return getNumber() % 2 == 1;
-		case RED:
-			return getColor().equals("red");
-		default:
-			return false;
-    	}
-    }
+  public void spin (){
+    myNumSpins++;
+    myValue = myRoller.nextInt(OUR_SPOTS.length);
+  }
 }
