@@ -56,12 +56,10 @@ public class Wheel {
     Color.GREEN
   };
 
-  private int myNumSpins;
   private int myValue;
   private Random myRoller;
 
   public Wheel(){
-    myNumSpins = 0;
     myValue = 0;
     myRoller = new Random();
     myRoller.setSeed(2907);
@@ -78,7 +76,6 @@ public class Wheel {
   }
 
   public void spin (){
-    myNumSpins++;
     myValue = myRoller.nextInt(OUR_SPOTS.length);
   }
 }
